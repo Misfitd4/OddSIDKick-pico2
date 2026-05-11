@@ -149,17 +149,17 @@ extern void readRegs( uint8_t *p1, uint8_t *p2 );
 #define bPOTX		( 1 << POTX )
 #define bPOTY		( 1 << POTY )
 
-#define AUDIO_I2S_CLOCK_PIN_BASE 	26
-#define AUDIO_I2S_DATA_PIN			28
+#define AUDIO_I2S_CLOCK_PIN_BASE 	10
+#define AUDIO_I2S_DATA_PIN			6
 
-#define DAC_BITS	( ( 3 << AUDIO_I2S_CLOCK_PIN_BASE ) | ( 1 << AUDIO_I2S_DATA_PIN ) )
+#define DAC_BITS	( ( 7 << AUDIO_I2S_CLOCK_PIN_BASE ) | ( 1 << AUDIO_I2S_DATA_PIN ) )
 #define bPWN_POT	( ( 1 << AUDIO_PIN ) | bPOTX | bPOTY | DAC_BITS )
 
 // enable output via PWM
 //#define OUTPUT_VIA_PWM
 
 // enable output via PCM5102-DAC
-//#define USE_DAC
+#define USE_DAC
 
 // will be available later
 //#define USE_SPDIF
@@ -169,7 +169,7 @@ extern void readRegs( uint8_t *p1, uint8_t *p2 );
 
 #define bPOTX		( 1 << POTX )
 #define bPOTY		( 1 << POTY )
-#define DAC_BITS	( ( 3 << AUDIO_I2S_CLOCK_PIN_BASE ) | ( 1 << AUDIO_I2S_DATA_PIN ) )
+#define DAC_BITS	( ( 7 << AUDIO_I2S_CLOCK_PIN_BASE ) | ( 1 << AUDIO_I2S_DATA_PIN ) )
 #define bPWN_POT	( ( 1 << AUDIO_PIN ) | bPOTX | bPOTY | DAC_BITS )
 #define bOE			( 1 << OE_DATA )
 
