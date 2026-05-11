@@ -37,6 +37,14 @@
 #define MEANINGFUL_RESET
 #define DIAGROM_HACK
 
+// OddSIDKick-pico2: receive SID writes over fast UART instead of C64 address/data bus
+#define ODDSID_SERIAL_INPUT
+
+#define SID_SERIAL_UART uart0
+#define SID_SERIAL_BAUD 2000000
+#define SID_SERIAL_TX_PIN 0
+#define SID_SERIAL_RX_PIN 1
+
 #include <malloc.h>
 #include <ctype.h>
 #include <string.h>
@@ -54,6 +62,7 @@
 #include "hardware/adc.h"
 #include "hardware/resets.h"
 #include "hardware/watchdog.h"
+#include "hardware/uart.h"
 
 #include "reSIDWrapper.h"
 #include "prgslots.h"
@@ -1027,6 +1036,109 @@ const uint8_t __not_in_flash( "mydata" ) jmpCode[ 3 ] = { 0x4c, 0x00, 0xd4 }; //
 static uint32_t resetCnt32 = 0;
 static volatile uint32_t noSIDAccessCounter = 0;
 static volatile uint32_t launchConfigEnabled = 2;
+
+
+#ifdef ODDSID_SERIAL_INPUT
+
+typedef enum {
+    SIDPKT_WAIT_HEADER = 0,
+    SIDPKT_VALUE,
+    SIDPKT_DELAY_LO,
+    SIDPKT_DELAY_HI
+} SidSerialParserState;
+
+typedef struct {
+    uint8_t sid;
+    uint8_t reg;
+    uint8_t value;
+    uint16_t delay;
+} SidSerialWrite;
+
+static SidSerialParserState sidSerialParserState = SIDPKT_WAIT_HEADER;
+static SidSerialWrite sidSerialPacket;
+
+static inline uint8_t sidSerialPoll(SidSerialWrite *out)
+{
+    while (uart_is_readable(SID_SERIAL_UART))
+    {
+        uint8_t b = uart_getc(SID_SERIAL_UART);
+
+        switch (sidSerialParserState)
+        {
+            case SIDPKT_WAIT_HEADER:
+                if (b & 0x80)
+                {
+                    sidSerialPacket.sid = (b & 0x20) ? 1 : 0;
+                    sidSerialPacket.reg = b & 0x1f;
+                    sidSerialParserState = SIDPKT_VALUE;
+                }
+                break;
+
+            case SIDPKT_VALUE:
+                sidSerialPacket.value = b;
+                sidSerialParserState = SIDPKT_DELAY_LO;
+                break;
+
+            case SIDPKT_DELAY_LO:
+                sidSerialPacket.delay = b;
+                sidSerialParserState = SIDPKT_DELAY_HI;
+                break;
+
+            case SIDPKT_DELAY_HI:
+                sidSerialPacket.delay |= ((uint16_t)b << 8);
+                *out = sidSerialPacket;
+                sidSerialParserState = SIDPKT_WAIT_HEADER;
+                return 1;
+        }
+    }
+
+    return 0;
+}
+
+void handleSerialSID()
+{
+    irq_set_mask_enabled(0xffffffff, 0);
+
+    uart_init(SID_SERIAL_UART, SID_SERIAL_BAUD);
+    gpio_set_function(SID_SERIAL_TX_PIN, GPIO_FUNC_UART);
+    gpio_set_function(SID_SERIAL_RX_PIN, GPIO_FUNC_UART);
+    uart_set_hw_flow(SID_SERIAL_UART, false, false);
+    uart_set_format(SID_SERIAL_UART, 8, 1, UART_PARITY_NONE);
+    uart_set_fifo_enabled(SID_SERIAL_UART, true);
+
+    SidSerialWrite w;
+    uint32_t serialCycleCounter = 0;
+
+    while (true)
+    {
+        while (sidSerialPoll(&w))
+        {
+            serialCycleCounter += w.delay;
+
+            uint16_t cmd = ((uint16_t)(w.reg & 0x1f) << 8) | w.value;
+            if (w.sid)
+                cmd |= (1 << 15);
+
+            uint8_t nextWrite = ringWrite + 1;
+            if (nextWrite >= RING_SIZE)
+                nextWrite = 0;
+
+            // If full, wait. First version: simple backpressure by stalling receiver.
+            while (nextWrite == ringRead)
+                tight_loop_contents();
+
+            ringTime[ringWrite] = serialCycleCounter;
+            ringBuf[ringWrite] = cmd;
+            ringWrite = nextWrite;
+
+            c64CycleCounter = serialCycleCounter;
+        }
+
+        tight_loop_contents();
+    }
+}
+
+#endif
 
 void handleBus()
 {
@@ -2064,6 +2176,12 @@ int main()
 
 	SET_CLOCK_FAST
 
+#ifdef ODDSID_SERIAL_INPUT
+	// OddSIDKick-pico2 serial SID-write input mode
+	multicore_launch_core1( runEmulation );
+	bus_ctrl_hw->priority = BUSCTRL_BUS_PRIORITY_PROC0_BITS;
+	handleSerialSID();
+#else
 #if defined( SKPICO_2350CR ) || defined( SKPICO_2350 )
 	// start bus handling and emulation
 	multicore_launch_core1( runEmulation );
@@ -2074,6 +2192,7 @@ int main()
 	multicore_launch_core1( handleBus );
 	bus_ctrl_hw->priority = BUSCTRL_BUS_PRIORITY_PROC1_BITS;
 	runEmulation();
+#endif
 #endif
 	return 0;
 }
