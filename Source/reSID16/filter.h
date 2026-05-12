@@ -153,6 +153,7 @@ public:
   void set6581FilterCoeffsC( int preset, int minFreq, int maxFreq );
 
 protected:
+  float evalType3( float br, float o, float s, float mfr, int x );
   chip_model chipModel;
 
   void set_w0();
