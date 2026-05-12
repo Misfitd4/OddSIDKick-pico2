@@ -42,8 +42,6 @@
 /Users/misfit/Desktop/dev/OddSIDKick-pico2/build/pico-sdk/src/rp2350/hardware_structs/CMakeFiles/edit_cache.dir
 /Users/misfit/Desktop/dev/OddSIDKick-pico2/build/pico-sdk/src/rp2350/hardware_structs/CMakeFiles/rebuild_cache.dir
 /Users/misfit/Desktop/dev/OddSIDKick-pico2/build/pico-sdk/src/rp2350/boot_stage2/CMakeFiles/bs2_default.dir
-/Users/misfit/Desktop/dev/OddSIDKick-pico2/build/pico-sdk/src/rp2350/boot_stage2/CMakeFiles/picotoolForceReconfigure.dir
-/Users/misfit/Desktop/dev/OddSIDKick-pico2/build/pico-sdk/src/rp2350/boot_stage2/CMakeFiles/picotoolBuild.dir
 /Users/misfit/Desktop/dev/OddSIDKick-pico2/build/pico-sdk/src/rp2350/boot_stage2/CMakeFiles/bs2_default_bin.dir
 /Users/misfit/Desktop/dev/OddSIDKick-pico2/build/pico-sdk/src/rp2350/boot_stage2/CMakeFiles/bs2_default_library.dir
 /Users/misfit/Desktop/dev/OddSIDKick-pico2/build/pico-sdk/src/rp2350/boot_stage2/CMakeFiles/edit_cache.dir
@@ -172,7 +170,6 @@
 /Users/misfit/Desktop/dev/OddSIDKick-pico2/build/pico-sdk/src/rp2_common/pico_async_context/CMakeFiles/rebuild_cache.dir
 /Users/misfit/Desktop/dev/OddSIDKick-pico2/build/pico-sdk/src/rp2_common/pico_btstack/CMakeFiles/edit_cache.dir
 /Users/misfit/Desktop/dev/OddSIDKick-pico2/build/pico-sdk/src/rp2_common/pico_btstack/CMakeFiles/rebuild_cache.dir
-/Users/misfit/Desktop/dev/OddSIDKick-pico2/build/pico-sdk/src/rp2_common/pico_cyw43_driver/CMakeFiles/pioasmBuild.dir
 /Users/misfit/Desktop/dev/OddSIDKick-pico2/build/pico-sdk/src/rp2_common/pico_cyw43_driver/CMakeFiles/cyw43_driver_picow_cyw43_bus_pio_spi_pio_h.dir
 /Users/misfit/Desktop/dev/OddSIDKick-pico2/build/pico-sdk/src/rp2_common/pico_cyw43_driver/CMakeFiles/edit_cache.dir
 /Users/misfit/Desktop/dev/OddSIDKick-pico2/build/pico-sdk/src/rp2_common/pico_cyw43_driver/CMakeFiles/rebuild_cache.dir

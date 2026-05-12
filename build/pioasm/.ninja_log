@@ -1,14 +1,14 @@
 # ninja log v7
-2	522	1778545955534125214	CMakeFiles/pioasm.dir/hex_output.cpp.o	d2e6712e2562b8da
-2	527	1778545955534369549	CMakeFiles/pioasm.dir/json_output.cpp.o	397984f26dc38d7b
-3	535	1778545955535151219	CMakeFiles/pioasm.dir/go_output.cpp.o	8d96a30b39ed76ef
-1	540	1778545955533821880	CMakeFiles/pioasm.dir/c_sdk_output.cpp.o	8ea46ce0aff059c3
-1	574	1778545955533334503	CMakeFiles/pioasm.dir/pio_disassembler.cpp.o	6c9ae0f2b8771e34
-2	581	1778545955534531049	CMakeFiles/pioasm.dir/ada_output.cpp.o	6ee3c01950d72e12
-1	625	1778545955532991710	CMakeFiles/pioasm.dir/main.cpp.o	7b328cdfb09b0ed0
-1	699	1778545955533974047	CMakeFiles/pioasm.dir/python_output.cpp.o	3346ac6f02db1f92
-1	706	1778545955533471087	CMakeFiles/pioasm.dir/gen/lexer.cpp.o	bfefb4087b95edba
-1	1755	1778545955533654171	CMakeFiles/pioasm.dir/gen/parser.cpp.o	af03f18970a50fd0
-1	1806	1778545955533187794	CMakeFiles/pioasm.dir/pio_assembler.cpp.o	22c392fc5a7aad69
-1806	1848	1778545957338243557	pioasm	6c3bbf2603d17946
-3	15	1778545957396770427	CMakeFiles/install.util	700a71b3d2ca1778
+2	579	1778546594220194423	CMakeFiles/pioasm.dir/hex_output.cpp.o	d2e6712e2562b8da
+3	839	1778546594220947010	CMakeFiles/pioasm.dir/ada_output.cpp.o	6ee3c01950d72e12
+2	847	1778546594220367924	CMakeFiles/pioasm.dir/json_output.cpp.o	397984f26dc38d7b
+3	876	1778546594221179469	CMakeFiles/pioasm.dir/go_output.cpp.o	8d96a30b39ed76ef
+1	913	1778546594219460837	CMakeFiles/pioasm.dir/pio_disassembler.cpp.o	6c9ae0f2b8771e34
+2	963	1778546594219890506	CMakeFiles/pioasm.dir/c_sdk_output.cpp.o	8ea46ce0aff059c3
+1	1218	1778546594219119252	CMakeFiles/pioasm.dir/main.cpp.o	7b328cdfb09b0ed0
+2	1333	1778546594220035881	CMakeFiles/pioasm.dir/python_output.cpp.o	3346ac6f02db1f92
+1	1361	1778546594219608963	CMakeFiles/pioasm.dir/gen/lexer.cpp.o	bfefb4087b95edba
+1	2018	1778546594219324045	CMakeFiles/pioasm.dir/pio_assembler.cpp.o	22c392fc5a7aad69
+2	2072	1778546594219746338	CMakeFiles/pioasm.dir/gen/parser.cpp.o	af03f18970a50fd0
+2073	2152	1778546596290752798	pioasm	6c3bbf2603d17946
+3	24	1778546596395493195	CMakeFiles/install.util	700a71b3d2ca1778

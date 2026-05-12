@@ -65,6 +65,7 @@
 #include "hardware/uart.h"
 
 #include "reSIDWrapper.h"
+#include "midi_sid.h"
 #include "prgslots.h"
 
 uint8_t  prgLaunch = 0, 
@@ -1106,11 +1107,16 @@ void handleSerialSID()
     uart_set_format(SID_SERIAL_UART, 8, 1, UART_PARITY_NONE);
     uart_set_fifo_enabled(SID_SERIAL_UART, true);
 
+    midi_sid_init();
+
     SidSerialWrite w;
     uint32_t serialCycleCounter = 0;
 
     while (true)
     {
+        midi_sid_pump_timing();
+        midi_sid_task();
+
         while (sidSerialPoll(&w))
         {
             serialCycleCounter += w.delay;

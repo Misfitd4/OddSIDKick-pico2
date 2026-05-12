@@ -16,6 +16,8 @@ pico_sdk_init()
 
 set(SOURCES
     Source/SKpico.c
+    Source/midi_sid.c
+    Source/usb_descriptors.c
     Source/exodecr.c
     Source/reSIDWrapper.cc
     Source/oddsid_stubs.c
@@ -59,6 +61,8 @@ target_link_libraries(OddSIDKick-pico2
     hardware_pio
     hardware_uart
     pico_audio_i2s
+    tinyusb_device
+    tinyusb_board
 )
 
 pico_enable_stdio_usb(OddSIDKick-pico2 0)
